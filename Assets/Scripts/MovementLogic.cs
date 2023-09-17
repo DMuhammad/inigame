@@ -33,12 +33,15 @@ public class MovementLogic : MonoBehaviour
 
         moveDirection = PlayerOrientation.forward * verticalInput + PlayerOrientation.right * horizontalInput;
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (grounded)
         {
-            rb.AddForce(moveDirection.normalized * runspeed * 10f, ForceMode.Force);
-        } else
-        {
-            rb.AddForce(moveDirection.normalized * walkspeed * 10f, ForceMode.Force);
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                rb.AddForce(moveDirection.normalized * runspeed * 10f, ForceMode.Force);
+            } else
+            {
+                rb.AddForce(moveDirection.normalized * walkspeed * 10f, ForceMode.Force);
+            }
         }
     }
 
@@ -46,13 +49,14 @@ public class MovementLogic : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && grounded)
         {
-            //rb.AddForce(transform.up * jumppower, ForceMode.Impulse);
-            rb.velocity = new Vector3(0f, jumppower, 0f);
+            rb.AddForce(transform.up * jumppower, ForceMode.Impulse);
+            //rb.velocity = new Vector3(0f, jumppower, 0f);
             grounded = false;
         } else if (!grounded)
         {
-            //rb.AddForce(Vector3.down * fallspeed * rb.mass, ForceMode.Force);
-            rb.velocity = new Vector3(0f, -fallspeed, 0f);
+            rb.AddForce(Vector3.down * fallspeed * rb.mass, ForceMode.Force);
+            //rb.velocity = new Vector3(0f, -fallspeed, 0f);
+            //grounded = true;
         }
     }
 
