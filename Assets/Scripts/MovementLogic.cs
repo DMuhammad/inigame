@@ -115,6 +115,7 @@ public class MovementLogic : MonoBehaviour
             if (moveDirection.normalized != Vector3.zero)
             {
                 anim.SetBool("WalkShoot", true);
+                anim.SetBool("Walk", false);
                 anim.SetBool("IdleShoot", false);
             } else
             {
