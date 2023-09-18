@@ -203,8 +203,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkspeed: 1
   runspeed: 2
-  jumppower: 10
-  fallspeed: 5
+  jumppower: 5
+  fallspeed: 2.5
+  airMultiplier: 2
+  HitPoints: 100
+  PlayerOrientation: {fileID: 244711501}
   anim: {fileID: 1707817742}
 --- !u!1 &368016831
 GameObject:
