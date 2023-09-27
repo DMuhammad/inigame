@@ -10,8 +10,9 @@ public class MovementLogic : MonoBehaviour
     float horizontalInput;
     float verticalInput;
     Vector3 moveDirection;
-    bool grounded = true, aerialboost = true, AimMode = true, TPSMode = false;
+    bool grounded = true, aerialboost = true, AimMode = false, TPSMode = true;
     public Animator anim;
+    public CameraLogic camlogic;
 
     // Start is called before the first frame update
     void Start()
@@ -105,6 +106,7 @@ public class MovementLogic : MonoBehaviour
                 AimMode = true;
                 anim.SetBool("AimMode", true);
             }
+            camlogic.CameraModeChanger(TPSMode, AimMode);
         }
     }
 
