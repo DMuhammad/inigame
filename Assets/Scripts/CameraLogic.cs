@@ -9,12 +9,14 @@ public class CameraLogic : MonoBehaviour
     public Transform AIMViewPoint;
     public float RotationSpeed;
     public GameObject TPSCamera, AIMCamera;
+    public GameObject crosshair;
     bool TPSMode = true, AIMMode = false;
 
     // Start is called before the first frame update
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        crosshair.SetActive(false);
     }
 
     // Update is called once per frame
@@ -54,10 +56,12 @@ public class CameraLogic : MonoBehaviour
         {
             TPSCamera.SetActive(true);
             AIMCamera.SetActive(false);
+            crosshair.SetActive(false);
         } else if (AIM)
         {
             TPSCamera.SetActive(false);
             AIMCamera.SetActive(true);
+            crosshair.SetActive(true);
         }
     }
 }
