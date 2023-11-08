@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementLogic : MonoBehaviour
+public class PlayerLogic: MonoBehaviour
 {
     private Rigidbody rb;
     public float walkspeed = 0.05f, runspeed = 0.1f, jumppower = 5f, fallspeed = 2.5f, airMultiplier, HitPoints = 100f;

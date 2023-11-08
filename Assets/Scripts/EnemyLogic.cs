@@ -11,28 +11,45 @@ public class EnemyLogic : MonoBehaviour
     public float ChaseRange;
     private NavMeshAgent agent;
     private float DistancetoTarget;
+    private float DistanceToDefault;
     private Animator anim;
+    Vector3 DefaultPosition;
 
     // Start is called before the first frame update
     void Start()
     {
         agent = this.GetComponent<NavMeshAgent>();
         anim = this.GetComponentInChildren<Animator>();
+        anim.SetFloat("Hitpoint", hitPoints);
+        DefaultPosition = this.transform.position;
     }
 
     // Update is called once per frame
     private void Update()
     {
         DistancetoTarget = Vector3.Distance(target.position, transform.position);
+        DistanceToDefault = Vector3.Distance(DefaultPosition, transform.position);
 
-        if (DistancetoTarget <= ChaseRange)
+        if (DistancetoTarget <= ChaseRange && hitPoints != 0)
         {
-            if (DistancetoTarget > agent.stoppingDistance)
+            FaceTarget(target.position);
+            if (DistancetoTarget > agent.stoppingDistance + 2f)
             {
                 ChaseTarget();
             } else if (DistancetoTarget <= agent.stoppingDistance)
             {
                 Attack();
+            }
+        } else if (DistancetoTarget >= ChaseRange * 2)
+        {
+            agent.SetDestination(DefaultPosition);
+            FaceTarget(DefaultPosition);
+
+            if (DistanceToDefault <= agent.stoppingDistance)
+            {
+                Debug.Log("Time to stop");
+                anim.SetBool("Run", false);
+                anim.SetBool("Attack", false);
             }
         }
     }
@@ -67,9 +84,19 @@ public class EnemyLogic : MonoBehaviour
     public void TakeDamage(float damage)
     {
         hitPoints -= damage;
+        anim.SetTrigger("GetHit");
+        anim.SetFloat("Hitpoint", hitPoints);
         if (hitPoints <= 0)
         {
-            Destroy(gameObject);
+            Destroy(gameObject, 3f);
+        }
+    }
+
+    public void HitConnect()
+    {
+        if (DistancetoTarget <= agent.stoppingDistance)
+        {
+            target.GetComponent<PlayerLogic>().PlayerGetHit(50f);
         }
     }
 }
