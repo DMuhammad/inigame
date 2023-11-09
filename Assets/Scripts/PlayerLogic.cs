@@ -4,21 +4,31 @@ using UnityEngine;
 
 public class PlayerLogic: MonoBehaviour
 {
-    private Rigidbody rb;
-    public float walkspeed = 0.05f, runspeed = 0.1f, jumppower = 5f, fallspeed = 2.5f, airMultiplier, HitPoints = 100f;
+    [Header("Player Setting")]
     public Transform PlayerOrientation;
+    public CameraLogic camlogic;
+    private Rigidbody rb;
+    public Animator anim;
+    public float walkspeed = 0.05f, runspeed = 0.1f, jumppower = 5f, fallspeed = 2.5f, airMultiplier, HitPoints = 100f;
+
     float horizontalInput;
     float verticalInput;
     Vector3 moveDirection;
     bool grounded = true, aerialboost = true, AimMode = false, TPSMode = true;
-    public Animator anim;
-    public CameraLogic camlogic;
+
+    [Header("SFX")]
+    public AudioClip ShootAudio;
+    public AudioClip StepAudio;
+    AudioSource PlayerAudio;
+
+
 
     // Start is called before the first frame update
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
         PlayerOrientation = this.GetComponent<Transform>();
+        PlayerAudio = this.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -114,10 +124,12 @@ public class PlayerLogic: MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Mouse0))
         {
+            PlayerAudio.clip = ShootAudio;
+            PlayerAudio.Play();
             if (moveDirection.normalized != Vector3.zero)
             {
                 anim.SetBool("WalkShoot", true);
-                anim.SetBool("Walk", false);
+                //anim.SetBool("Walk", false);
                 anim.SetBool("IdleShoot", false);
             } else
             {
@@ -140,5 +152,12 @@ public class PlayerLogic: MonoBehaviour
         {
             anim.SetBool("Death", true);
         }
+    }
+
+    public void step()
+    {
+        Debug.Log("Step");
+        PlayerAudio.clip = StepAudio;
+        PlayerAudio.Play();
     }
 }

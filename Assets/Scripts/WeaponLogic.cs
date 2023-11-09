@@ -6,6 +6,8 @@ public class WeaponLogic : MonoBehaviour
 {
     [SerializeField] Camera ShootCamera;
     [SerializeField] float range = 1000f;
+    public ParticleSystem MuzzleFlash;
+    public GameObject HitEffect;
 
     // Start is called before the first frame update
     //void Start()
@@ -18,6 +20,7 @@ public class WeaponLogic : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
+            MuzzleFlash.Play();
             Shoot();
         }
     }
@@ -25,14 +28,21 @@ public class WeaponLogic : MonoBehaviour
     private void Shoot()
     {
         RaycastHit hit;
-        Physics.Raycast(ShootCamera.transform.position, ShootCamera.transform.forward, out hit, range);
-        Debug.Log("I hit this thing: " + hit.transform.name);
-
-        if (hit.transform.tag.Equals("Enemy"))
+        if(Physics.Raycast(ShootCamera.transform.position, ShootCamera.transform.forward, out hit, range))
         {
-            EnemyLogic target = hit.transform.GetComponent<EnemyLogic>();
-            target.TakeDamage(50);
+            CreateHitImpact(hit);
+            Debug.Log("I hit this thing: " + hit.transform.name);
+
+            if (hit.transform.tag.Equals("Enemy"))
+            {
+                EnemyLogic target = hit.transform.GetComponent<EnemyLogic>();
+                target.TakeDamage(50);
+            }
+        } else
+        {
+            return;
         }
+
     }
 
     void OnDrawGizmos()
@@ -40,5 +50,11 @@ public class WeaponLogic : MonoBehaviour
         Gizmos.color = Color.red;
         Vector3 direction = ShootCamera.transform.TransformDirection(Vector3.forward) * range;
         Gizmos.DrawRay(ShootCamera.transform.position, direction);
+    }
+
+    private void CreateHitImpact(RaycastHit hit)
+    {
+        GameObject impact = Instantiate(HitEffect, hit.point, Quaternion.LookRotation(hit.normal));
+        Destroy(impact, .1f);
     }
 }
