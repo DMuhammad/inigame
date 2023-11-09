@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyLogic : MonoBehaviour
 {
+    [Header("Enemy Setting")]
     public float hitPoints = 100f;
     public float turnSpeed = 15f;
     public Transform target;
@@ -15,12 +16,24 @@ public class EnemyLogic : MonoBehaviour
     private Animator anim;
     Vector3 DefaultPosition;
 
+    [Header("Enemy SFX")]
+    public AudioClip GetHitAudio;
+    public AudioClip StepAudio;
+    public AudioClip AttackSwingAudio;
+    public AudioClip AttackConnectAudio;
+    public AudioClip DeathAudio;
+    AudioSource EnemyAudio;
+
+    [Header("Enemy VFX")]
+    public ParticleSystem SlashEffect;
+
     // Start is called before the first frame update
     void Start()
     {
         agent = this.GetComponent<NavMeshAgent>();
         anim = this.GetComponentInChildren<Animator>();
         anim.SetFloat("Hitpoint", hitPoints);
+        EnemyAudio = this.GetComponent<AudioSource>();
         DefaultPosition = this.transform.position;
     }
 
@@ -36,6 +49,7 @@ public class EnemyLogic : MonoBehaviour
             if (DistancetoTarget > agent.stoppingDistance + 2f)
             {
                 ChaseTarget();
+                SlashEffect.Stop();
             } else if (DistancetoTarget <= agent.stoppingDistance)
             {
                 Attack();
@@ -83,20 +97,39 @@ public class EnemyLogic : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        EnemyAudio.clip = GetHitAudio;
+        EnemyAudio.Play();
         hitPoints -= damage;
         anim.SetTrigger("GetHit");
         anim.SetFloat("Hitpoint", hitPoints);
         if (hitPoints <= 0)
         {
+            EnemyAudio.clip = DeathAudio;
+            EnemyAudio.Play();
             Destroy(gameObject, 3f);
         }
     }
 
     public void HitConnect()
     {
+        EnemyAudio.clip = AttackSwingAudio;
+        EnemyAudio.Play();
         if (DistancetoTarget <= agent.stoppingDistance)
         {
+            EnemyAudio.clip = AttackConnectAudio;
+            EnemyAudio.Play();
             target.GetComponent<PlayerLogic>().PlayerGetHit(50f);
         }
+    }
+
+    public void SlashEffectToggleOn()
+    {
+        SlashEffect.Play();
+    }
+
+    public void step()
+    {
+        EnemyAudio.clip = StepAudio;
+        EnemyAudio.Play();
     }
 }

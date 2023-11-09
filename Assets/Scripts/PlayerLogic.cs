@@ -19,6 +19,7 @@ public class PlayerLogic: MonoBehaviour
     [Header("SFX")]
     public AudioClip ShootAudio;
     public AudioClip StepAudio;
+    public AudioClip DeathAudio;
     AudioSource PlayerAudio;
 
 
@@ -147,9 +148,12 @@ public class PlayerLogic: MonoBehaviour
     {
         Debug.Log("Player Receive Damage - " + damage);
         HitPoints = HitPoints - damage;
+        anim.SetTrigger("GetHit");
 
         if (HitPoints == 0f)
         {
+            PlayerAudio.clip = DeathAudio;
+            PlayerAudio.Play();
             anim.SetBool("Death", true);
         }
     }
