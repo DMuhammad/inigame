@@ -192,7 +192,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2658049}
-  m_LocalRotation: {x: 0.011957794, y: -3.7031445e-10, z: 4.4284598e-12, w: 0.99992853}
+  m_LocalRotation: {x: 0.0119577935, y: 9.857902e-10, z: -1.1788719e-11, w: 0.99992853}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -212,6 +212,7 @@ GameObject:
   - component: {fileID: 127039176}
   - component: {fileID: 127039177}
   - component: {fileID: 127039178}
+  - component: {fileID: 127039179}
   m_Layer: 0
   m_Name: MazeManager
   m_TagString: Untagged
@@ -249,12 +250,36 @@ MonoBehaviour:
   width: 30
   depth: 30
   scale: 6
+  Character: {fileID: 0}
+  Enemy: {fileID: 0}
+  EnemyCount: 3
   Cube:
   - {fileID: 2762682244706892848, guid: 1a7c00cd2ed6d9d45ab7f26a97ceb707, type: 3}
   - {fileID: 2762682244706892848, guid: 787e5e1704640a2459773ec2f35eedb7, type: 3}
   - {fileID: 2762682244706892848, guid: e62609de5c1d97a43a736940ee485fbc, type: 3}
-  character: {fileID: 0}
 --- !u!114 &127039178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127039174}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79aca2f5969ec8649b85cc24d932e99a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  width: 30
+  depth: 30
+  scale: 6
+  Character: {fileID: 0}
+  Enemy: {fileID: 0}
+  EnemyCount: 3
+  Cube:
+  - {fileID: 4257524913624729247, guid: 9f26f0bed40870845a71bf661bbd0114, type: 3}
+  - {fileID: 4257524913624729247, guid: 2ba4acb0c05de5948a086791b4d6627c, type: 3}
+  - {fileID: 4257524913624729247, guid: 921078fe2244ea54ba557416ac5c5d69, type: 3}
+--- !u!114 &127039179
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -263,17 +288,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 127039174}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79aca2f5969ec8649b85cc24d932e99a, type: 3}
+  m_Script: {fileID: 11500000, guid: 1c51d306fe1b4f240a919cea278eb918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   width: 30
   depth: 30
   scale: 6
+  Character: {fileID: 244711496}
+  Enemy: {fileID: 2540221758674805698, guid: 981c9177d3eaa894f8db29a9e8255058, type: 3}
+  EnemyCount: 3
   Cube:
   - {fileID: 4257524913624729247, guid: 9f26f0bed40870845a71bf661bbd0114, type: 3}
   - {fileID: 4257524913624729247, guid: 2ba4acb0c05de5948a086791b4d6627c, type: 3}
   - {fileID: 4257524913624729247, guid: 921078fe2244ea54ba557416ac5c5d69, type: 3}
-  character: {fileID: 244711496}
 --- !u!1 &198658108
 GameObject:
   m_ObjectHideFlags: 3
@@ -1331,7 +1358,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1073726193}
-  m_LocalRotation: {x: 0.07460207, y: 0.09542448, z: -0.0071718483, w: 0.99261135}
+  m_LocalRotation: {x: 0.074602, y: 0.09542447, z: -0.007171847, w: 0.99261135}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

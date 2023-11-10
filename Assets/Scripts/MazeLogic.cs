@@ -19,9 +19,12 @@ public class MazeLogic : MonoBehaviour
     public int width = 30;
     public int depth = 30;
     public int scale = 6;
+    public GameObject Character;
+    public GameObject Enemy;
+    public int EnemyCount = 3;
     public List<GameObject> Cube;
     public byte[,] map;
-    public GameObject character;
+    GameObject[,] BuildingList;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +32,7 @@ public class MazeLogic : MonoBehaviour
         GenerateMaps();
         DrawMaps();
         PlaceCharacter();
+        PlaceEnemy();
     }
 
     // Update is called once per frame
@@ -103,12 +107,36 @@ public class MazeLogic : MonoBehaviour
 
                 if (map[x, z] == 0 && !PlayerSet)
                 {
-                    Debug.Log("Placing character");
+                    Debug.Log("Placing Character");
                     PlayerSet = true;
-                    character.transform.position = new Vector3(x * scale, 0, z * scale);
+                    Character.transform.position = new Vector3(x * scale, 0, z * scale);
                 } else if (PlayerSet)
                 {
-                    Debug.Log("already placing character");
+                    Debug.Log("already placing Character");
+                    return;
+                }
+            }
+        }
+    }
+
+    public virtual void PlaceEnemy()
+    {
+        int EnemySet = 0;
+        for (int i = 0; i < depth; i++)
+        {
+            for (int j = 0; j < width; j++)
+            {
+                int x = Random.Range(0, width);
+                int z = Random.Range(0, depth);
+
+                if (map[x, z] == 0 && EnemySet != EnemyCount)
+                {
+                    Debug.Log("Placing Enemy");
+                    EnemySet++;
+                    Instantiate(Enemy, new Vector3(x * scale, 0, z * scale), Quaternion.identity);
+                } else if (EnemySet == EnemyCount)
+                {
+                    Debug.Log("already placing all the enemy");
                     return;
                 }
             }
