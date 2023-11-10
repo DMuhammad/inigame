@@ -171,6 +171,8 @@ MonoBehaviour:
   depth: 30
   Cube:
   - {fileID: 2762682244706892848, guid: 1a7c00cd2ed6d9d45ab7f26a97ceb707, type: 3}
+  - {fileID: 2762682244706892848, guid: 787e5e1704640a2459773ec2f35eedb7, type: 3}
+  - {fileID: 2762682244706892848, guid: e62609de5c1d97a43a736940ee485fbc, type: 3}
 --- !u!1 &181438529
 GameObject:
   m_ObjectHideFlags: 0
