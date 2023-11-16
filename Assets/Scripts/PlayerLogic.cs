@@ -7,6 +7,7 @@ public class PlayerLogic: MonoBehaviour
     [Header("Player Setting")]
     public Transform PlayerOrientation;
     public CameraLogic camlogic;
+    public UIGameplayLogic gameplaylogic;
     private Rigidbody rb;
     public Animator anim;
     public float walkspeed = 0.05f, runspeed = 0.1f, jumppower = 5f, fallspeed = 2.5f, airMultiplier, HitPoints = 100f;
@@ -15,6 +16,8 @@ public class PlayerLogic: MonoBehaviour
     float verticalInput;
     Vector3 moveDirection;
     bool grounded = true, aerialboost = true, AimMode = false, TPSMode = true;
+
+    float maxhealth;
 
     [Header("SFX")]
     public AudioClip ShootAudio;
@@ -30,6 +33,8 @@ public class PlayerLogic: MonoBehaviour
         rb = this.GetComponent<Rigidbody>();
         PlayerOrientation = this.GetComponent<Transform>();
         PlayerAudio = this.GetComponent<AudioSource>();
+        maxhealth = HitPoints;
+        gameplaylogic.UpdateHealthBar(HitPoints, maxhealth);
     }
 
     // Update is called once per frame
@@ -148,6 +153,7 @@ public class PlayerLogic: MonoBehaviour
     {
         Debug.Log("Player Receive Damage - " + damage);
         HitPoints = HitPoints - damage;
+        gameplaylogic.UpdateHealthBar(HitPoints, maxhealth);
         anim.SetTrigger("GetHit");
 
         if (HitPoints == 0f)

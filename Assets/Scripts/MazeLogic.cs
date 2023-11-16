@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MapLocation
 {
@@ -22,17 +23,23 @@ public class MazeLogic : MonoBehaviour
     public GameObject Character;
     public GameObject Enemy;
     public int EnemyCount = 3;
+    public int RoomCount = 3;
+    public int RoomMinSize = 6;
+    public int RoomMaxSize = 10;
+    public NavMeshSurface surface;
     public List<GameObject> Cube;
     public byte[,] map;
-    GameObject[,] BuildingList;
+
     // Start is called before the first frame update
     void Start()
     {
         InitialiseMap();
         GenerateMaps();
+        AddRooms(RoomCount, RoomMinSize, RoomMaxSize);
         DrawMaps();
         PlaceCharacter();
         PlaceEnemy();
+        surface.BuildNavMesh();
     }
 
     // Update is called once per frame
@@ -129,7 +136,7 @@ public class MazeLogic : MonoBehaviour
                 int x = Random.Range(0, width);
                 int z = Random.Range(0, depth);
 
-                if (map[x, z] == 0 && EnemySet != EnemyCount)
+                if (map[x, z] == 2 && EnemySet != EnemyCount)
                 {
                     Debug.Log("Placing Enemy");
                     EnemySet++;
@@ -138,6 +145,25 @@ public class MazeLogic : MonoBehaviour
                 {
                     Debug.Log("already placing all the enemy");
                     return;
+                }
+            }
+        }
+    }
+
+    public virtual void AddRooms(int count, int minSize, int maxSize)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            int startX = Random.Range(3, width - 3);
+            int startZ = Random.Range(3, depth - 3);
+            int roomWidth = Random.Range(minSize, maxSize);
+            int roomDepth = Random.Range(minSize, maxSize);
+
+            for (int x = startX; x < width - 3 && x < startX + roomWidth; x++)
+            {
+                for (int z = startZ; z < depth - 3 && z < startZ + roomDepth; z++)
+                {
+                    map[x, z] = 2;
                 }
             }
         }

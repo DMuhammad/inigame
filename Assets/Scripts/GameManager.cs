@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
 
     public void OpenGameplay()
     {
-        SceneManager.LoadScene("GameplayScene");
+        SceneManager.LoadScene("MazeStage");
     }
 
     // Start is called before the first frame update
